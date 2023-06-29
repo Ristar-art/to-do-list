@@ -2,6 +2,9 @@
   margin: 0;
   text-align: center;
   padding: 0;
+  background-color: #f7f7f7;
+  height: 1000px;
+  
 }
 
 .login-page {
@@ -9,6 +12,14 @@
   text-align: center;
   background-color: #f7f7f7;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.container{
+ 
+  display: flex;
+  text-align: center;
+  padding-left: 800px;
+  padding-top: 300px;
 }
 
 input{

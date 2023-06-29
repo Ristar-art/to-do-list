@@ -3,7 +3,7 @@ import { useState } from "react"
 
 function RegistrationPage(){
 
-  const [name,setName]= useState('')
+  const [name,setName]= useState()
   const [email,setEmail]= useState('')
   const [password,setPassword]= useState();
   const [details,setDetails] = useState([])

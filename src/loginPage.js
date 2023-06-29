@@ -1,56 +1,64 @@
-import { useState } from "react";
+
 import React from "react";
+import './App.css'
+import { useState } from 'react'
+import * as yup from 'yup' // importing functions from yup library
+ 
 
 function LoginPage() {
 
-     const [credentials,setCredentials]= useState('')
-     const [password,setpassword] = useState('')
-     const [message,setmessage]= useState("")
-    
-    
-    function handleName(e){
-        setCredentials(e.target.value)
-    }
-    function handlechange(e){
+     const [userName,setUserName]= useState('')
+     const [email,setEmail] =useState('');
+     const [password,setPassword] = useState('');
+     
+     const [message,setMessage]= useState("");
+
+
+     const userSchema = yup.object().shape({
+        // name can not be an empty string so we will use the required function
+        userName: yup.string().required(),
+        // email can not be an empty string so we will use the required function
+        email: yup.string().email().required(),
+        // password can not be an empty string so we will use the required function. Also, we have used the `min` function to set the minimum length of the password. Yup passwords by default handle the conditions of at least one upper case, at least one lower case, and at least one special character in the password
+        password: yup.string().min(8).required(),
        
-        setpassword(e.target.value)
-    }
+      })
+
 
     
- 
+     async function validateForm() {
+       
+        let Credentials = {
+        userName: userName,          
+        email: email,
+        password: password,
+         
+        }
 
-   const Validation = (e) =>{
-       e.preventDefault();
-        console.log(<p>is this jhappening</p>);
-        const valMes= /^(?=.*\d)(?=.*[a-z])[a-zA-Z0-9]{8,}$/
-        if(password===""){
-            setmessage ("pleas enter password")
-        }
-        else if (valMes.test(password)){
-            setmessage("password is valid")
-        }
-        else if (!valMes.test(password)){
-            setmessage("password is not valid")
-        } else {
-            setmessage("")
-        }
-           
-    }
+    const error = await userSchema.isValid(Credentials)
+    
+    if (error) {
+        setMessage("Enter proper username,email and password")
+    } 
+    
+  }
 
+  
     
     return (
        <div className="Login-page">
-        <p>the irdfk</p>
-        
-           <form onSubmit={Validation}>
-              <p>wha is going on</p>
-              <p>{credentials}</p><br></br>
-              <p>{password}</p>
-              <p>{message}</p><br></br>
-              <input type = "text" placeholder="Name" onChange={handleName} value={credentials}></input><br></br>
-              <input type = "Password" placeholder="Password" onChange={handlechange} value={password}/><br></br>
+              
+           <form onClick={validateForm}>
+
+              <input type = "text" placeholder="Name" onChange={(e) => setUserName(e.target.value)}></input><br></br>
+              
+              < input type = "text" placeholder="email" onChange={(e) => setEmail(e.target.value)}></input><br></br>
              
-              <button >click here</button>
+              < input type = "pasword" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input><br></br>
+              
+             
+              <button type="submit" >log in</button>
+        
            </form>
       </div>
     );
